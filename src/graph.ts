@@ -6,12 +6,16 @@ import { GraphNode, type GraphNodeId } from './node'
  * which connect a node to other nodes in the graph
  */
 export class Graph {
+  name: string
+
   nodes = new Map<string, GraphNode<any>>()
 
   // Defines if edges move in one direction (true) or any (false)
   directed: boolean = false
 
-  constructor (directed: boolean = false) {
+  constructor (name: string, directed: boolean = false) {
+    if (!name) throw new Error('Graph must have a name')
+    this.name = name
     this.directed = directed
   }
 
