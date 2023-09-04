@@ -1,6 +1,6 @@
 # KSDB
 
-Because why not create a Graph Database in Node ¯\_(ツ)\_/¯
+Because why not create a Graph Database in Node ¯\\\_(ツ)\_/¯
 
 ## Development
 
