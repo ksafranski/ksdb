@@ -93,7 +93,7 @@ describe('graph', () => {
           'test',
           'test2',
           'test2a',
-          'test3',
+          'test3'
         ]);
         expect(nodes?.size).toBe(4);
       });
@@ -112,7 +112,7 @@ describe('graph', () => {
           'test',
           'test2',
           'test3',
-          'test2a',
+          'test2a'
         ]);
         expect(nodes?.size).toBe(4);
       });

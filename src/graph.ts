@@ -16,7 +16,7 @@ export class Graph extends Base {
   // Defines if edges move in one direction (true) or any (false)
   directed: boolean = false;
 
-  constructor(name: string, directed: boolean = false) {
+  constructor (name: string, directed: boolean = false) {
     super();
     if (!name) throw new Error('Graph must have a name');
     this.name = name;
@@ -24,7 +24,7 @@ export class Graph extends Base {
   }
 
   // Just check the map for the node and return
-  nodeExists(id?: GraphNodeId): GraphNode<any> | undefined {
+  nodeExists (id?: GraphNodeId): GraphNode<any> | undefined {
     if (!id) return undefined;
     return this.nodes.get(id);
   }
@@ -40,7 +40,7 @@ export class Graph extends Base {
   }
 
   // Removes a node from the graph
-  removeNode(id: GraphNodeId): void {
+  removeNode (id: GraphNodeId): void {
     const node = this.nodeExists(id);
     if (node) {
       this.nodes.delete(id);
