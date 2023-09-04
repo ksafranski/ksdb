@@ -1,6 +1,7 @@
+import { GraphNode } from '../src/node';
 import { Graph } from '../src/graph';
 
-let graph: Graph | undefined;
+let graph: Graph<any> | undefined;
 
 describe('graph', () => {
   afterEach(() => {
@@ -116,6 +117,21 @@ describe('graph', () => {
         ]);
         expect(nodes?.size).toBe(4);
       });
+    });
+  });
+  describe('find', () => {
+    it('finds a node by running a callback', () => {
+      graph = new Graph('test');
+      const node1 = graph.addNode('test');
+      const node2 = graph.addNode('test2');
+      const node2a = graph.addNode('test2a');
+      const node3 = graph.addNode('test3');
+      graph.addEdge(node1, node2);
+      graph.addEdge(node2, node2a);
+      graph.addEdge(node2, node3);
+      const node = graph.find((n: any) => n.data === 'test2');
+      expect(node).toBeInstanceOf(GraphNode);
+      expect(node?.data).toBe('test2');
     });
   });
 });

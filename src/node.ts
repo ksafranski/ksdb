@@ -16,7 +16,7 @@ export class GraphNode<T> extends Base {
     if (!data) throw new Error('Node must have data');
     // Generate a UUID and set props
     this._id = id || uuid();
-    this.data = data;
+    this.data = data as T;
   }
 
   // Determine if another node is adjacent

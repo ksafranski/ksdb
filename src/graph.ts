@@ -6,7 +6,7 @@ import { Base } from './util/base';
 /**
  * Primary Graph class
  */
-export class Graph extends Base {
+export class Graph<T extends GraphNode<T>> extends Base {
   // Ref for the graph context
   name: string;
 
@@ -30,12 +30,11 @@ export class Graph extends Base {
   }
 
   // Creates a new node and adds it to the graph
-  addNode<T>(data: GraphNode<T> | any): GraphNode<T | any> {
-    let node = this.nodeExists(data?._id);
-    if (!node || node === null) {
-      node = new GraphNode(data);
-      this.nodes.set(node._id, node);
-    }
+  addNode<T>(data: T): GraphNode<T> {
+    const existing = this.nodeExists((data as any)._id);
+    if (existing) return existing;
+    const node = new GraphNode<T>(data);
+    this.nodes.set(node._id, node);
     return node;
   }
 
@@ -52,12 +51,13 @@ export class Graph extends Base {
 
   // Adds an edge by connecting the adjacents between a source node an a destination
   addEdge<S, D>(
-    source: GraphNode<S>,
-    destination: GraphNode<D>
+    source: GraphNode<S> | S,
+    destination: GraphNode<D> | D
   ): Array<GraphNode<any>> {
-    const sourceNode = this.nodeExists(source._id) || this.addNode(source);
+    const sourceNode =
+      this.nodeExists((source as any)._id) || this.addNode(source);
     const destinationNode =
-      this.nodeExists(destination._id) || this.addNode(destination);
+      this.nodeExists((destination as any)._id) || this.addNode(destination);
     if (sourceNode && destinationNode) {
       sourceNode.addAdjacent(destinationNode);
       if (!this.directed) {
@@ -80,7 +80,6 @@ export class Graph extends Base {
       if (!this.directed) {
         destinationNode.removeAdjacent(sourceNode);
       }
-
       return [sourceNode, destinationNode];
     }
   }
@@ -113,5 +112,9 @@ export class Graph extends Base {
 
     // Return the set
     return visited;
+  }
+
+  find<T>(matcher: any): GraphNode<T> | undefined {
+    return [...this.nodes.values()].find(matcher);
   }
 }
