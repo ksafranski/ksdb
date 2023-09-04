@@ -1,23 +1,30 @@
-import { Base } from './util/base'
+import { Base } from './util/base';
 
+/**
+ * Queue class
+ */
 export class Queue extends Base {
-  items: any[] = []
+  // Items in the queue
+  items: any[] = [];
 
-  constructor () {
-    super()
+  constructor() {
+    super();
   }
 
-  get size (): number {
-    return this.items.length
+  // Get the size of the queue
+  get size(): number {
+    return this.items.length;
   }
 
+  // Add an item to the queue
   push<T>(item: T): Queue {
-    this.items.push(item)
-    return this
+    this.items.push(item);
+    return this;
   }
 
+  // Get the next item from the queue
   next<T>(): T | undefined {
-    const item = this.items.shift()
-    return item
+    const item = this.items.shift();
+    return item;
   }
 }
