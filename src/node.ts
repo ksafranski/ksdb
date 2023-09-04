@@ -10,7 +10,7 @@ export class GraphNode<T> extends Base {
   data: T;
   adjacents: Array<GraphNode<T>> = [];
 
-  constructor(data: T, id?: string) {
+  constructor (data: T, id?: string) {
     super();
     // Oops, no datas
     if (!data) throw new Error('Node must have data');
@@ -20,12 +20,12 @@ export class GraphNode<T> extends Base {
   }
 
   // Determine if another node is adjacent
-  isAdjacent(node: GraphNode<T>): boolean {
+  isAdjacent (node: GraphNode<T>): boolean {
     return this.adjacents.includes(node);
   }
 
   // Just pushes an adjacent onto the array
-  addAdjacent(node: GraphNode<T>): GraphNode<T> {
+  addAdjacent (node: GraphNode<T>): GraphNode<T> {
     if (this.isAdjacent(node)) return node;
     if (node instanceof GraphNode) {
       this.adjacents.push(node);
@@ -36,7 +36,7 @@ export class GraphNode<T> extends Base {
   }
 
   // Removes an adjacent node by reference
-  removeAdjacent(node: GraphNode<T>): void {
+  removeAdjacent (node: GraphNode<T>): void {
     this.adjacents = this.adjacents.filter((n: GraphNode<T>) => n !== node);
   }
 }

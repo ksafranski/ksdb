@@ -7,12 +7,12 @@ export class Queue extends Base {
   // Items in the queue
   items: any[] = [];
 
-  constructor() {
+  constructor () {
     super();
   }
 
   // Get the size of the queue
-  get size(): number {
+  get size (): number {
     return this.items.length;
   }
 

@@ -3,7 +3,7 @@ const { LOG_LEVEL = 'standard' } = process.env;
 type LogLevel = 'none' | 'standard' | 'verbose';
 
 interface IBaseOpts {
-  logLevel?: LogLevel;
+  logLevel?: LogLevel
 }
 
 /**
@@ -12,7 +12,7 @@ interface IBaseOpts {
 export class Base {
   logLevel: LogLevel = 'standard';
 
-  constructor(opts: IBaseOpts = {}) {
+  constructor (opts: IBaseOpts = {}) {
     // Handle opts
     this.logLevel = opts.logLevel || (LOG_LEVEL as LogLevel);
 
@@ -35,11 +35,11 @@ export class Base {
           // @ts-expect-error: prop as string key
           return this[prop];
         }
-      },
+      }
     });
   }
 
-  log(level: 'info' | 'error', prop: any, args: any[]): void {
+  log (level: 'info' | 'error', prop: any, args: any[]): void {
     if (this.logLevel === 'none') return;
     const argOutput =
       this.logLevel === 'verbose'
