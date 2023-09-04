@@ -1,4 +1,10 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# npm run lint:fix
+npm run lint:fix
+
+# If there are any errors, exit with a non-zero status code
+if [ $? -ne 0 ]; then
+  echo "There are ESLint errors. Please fix them before committing."
+  exit 1
+fi
