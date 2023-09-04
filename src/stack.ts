@@ -7,12 +7,12 @@ export class Stack extends Base {
   // Items in the stack
   items: any[] = [];
 
-  constructor() {
+  constructor () {
     super();
   }
 
   // Get the size of the stack
-  get size(): number {
+  get size (): number {
     return this.items.length;
   }
 
