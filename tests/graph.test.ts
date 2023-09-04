@@ -76,17 +76,46 @@ describe('graph', () => {
       expect(node2?.isAdjacent(node1)).toBe(false);
     });
   });
-  describe('breadthFirstSearch', () => {
-    it('should return an array of nodes', () => {
-      graph = new Graph('test');
-      const node1 = graph.addNode('test');
-      const node2 = graph.addNode('test2');
-      const node3 = graph.addNode('test3');
-      graph.addEdge(node1, node2);
-      graph.addEdge(node2, node3);
-      const nodes = graph.breadthFirstSearch(node1);
-      expect(nodes).toBeInstanceOf(Set);
-      expect(nodes?.size).toBe(3);
+  describe('search', () => {
+    describe('breadth', () => {
+      it('should return an array of nodes from a breadth-first search', () => {
+        graph = new Graph('test');
+        const node1 = graph.addNode('test');
+        const node2 = graph.addNode('test2');
+        const node2a = graph.addNode('test2a');
+        const node3 = graph.addNode('test3');
+        graph.addEdge(node1, node2);
+        graph.addEdge(node2, node2a);
+        graph.addEdge(node2, node3);
+        const nodes = graph.search('breadth', node1);
+        expect(nodes).toBeInstanceOf(Set);
+        expect([...nodes].map((n: any) => n.data)).toEqual([
+          'test',
+          'test2',
+          'test2a',
+          'test3',
+        ]);
+        expect(nodes?.size).toBe(4);
+      });
+      it('should return an array of nodes from a depth-first search', () => {
+        graph = new Graph('test');
+        const node1 = graph.addNode('test');
+        const node2 = graph.addNode('test2');
+        const node2a = graph.addNode('test2a');
+        const node3 = graph.addNode('test3');
+        graph.addEdge(node1, node2);
+        graph.addEdge(node2, node2a);
+        graph.addEdge(node2, node3);
+        const nodes = graph.search('depth', node1);
+        expect(nodes).toBeInstanceOf(Set);
+        expect([...nodes].map((n: any) => n.data)).toEqual([
+          'test',
+          'test2',
+          'test3',
+          'test2a',
+        ]);
+        expect(nodes?.size).toBe(4);
+      });
     });
   });
 });

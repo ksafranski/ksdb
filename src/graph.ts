@@ -1,5 +1,6 @@
 import { GraphNode, type GraphNodeId } from './node';
 import { Queue } from './queue';
+import { Stack } from './stack';
 import { Base } from './util/base';
 
 /**
@@ -15,7 +16,7 @@ export class Graph extends Base {
   // Defines if edges move in one direction (true) or any (false)
   directed: boolean = false;
 
-  constructor (name: string, directed: boolean = false) {
+  constructor(name: string, directed: boolean = false) {
     super();
     if (!name) throw new Error('Graph must have a name');
     this.name = name;
@@ -23,7 +24,7 @@ export class Graph extends Base {
   }
 
   // Just check the map for the node and return
-  nodeExists (id?: GraphNodeId): GraphNode<any> | undefined {
+  nodeExists(id?: GraphNodeId): GraphNode<any> | undefined {
     if (!id) return undefined;
     return this.nodes.get(id);
   }
@@ -39,7 +40,7 @@ export class Graph extends Base {
   }
 
   // Removes a node from the graph
-  removeNode (id: GraphNodeId): void {
+  removeNode(id: GraphNodeId): void {
     const node = this.nodeExists(id);
     if (node) {
       this.nodes.delete(id);
@@ -84,25 +85,28 @@ export class Graph extends Base {
     }
   }
 
-  breadthFirstSearch<T>(first: GraphNode<T>): Set<GraphNode<T> | unknown> {
-    // Create a queue to store the nodes that we have yet to visit.
-    const queue = new Queue();
-    queue.push(first);
+  search<T>(
+    type: 'breadth' | 'depth' = 'breadth',
+    first: GraphNode<T>
+  ): Set<GraphNode<T> | unknown> {
+    // Determine the type of visitList to use.
+    const visitList = type === 'breadth' ? new Queue() : new Stack();
+    visitList.push(first);
 
     // Create a set to store the nodes that we have already visited.
     const visited = new Set();
 
-    // While there are still nodes in the queue:
-    while (queue.size > 0) {
-      // Get the next node from the queue.
-      const node: any = queue.next();
+    // While there are still nodes in the visitList:
+    while (visitList.size > 0) {
+      // Get the next node from the visitList.
+      const node: any = visitList.next();
       // If we have not already visited this node:
       if (!visited.has(node)) {
         // Mark the node as visited.
         visited.add(node);
-        // Add all of the node's adjacent to the queue.
+        // Add all of the node's adjacent to the visitList.
         for (const adjacent of node.adjacents) {
-          queue.push(adjacent);
+          visitList.push(adjacent);
         }
       }
     }
