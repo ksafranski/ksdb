@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "export LOG_LEVEL=none && jest",
+    "test:watch": "LOG_LEVEL=none jest --watch",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "prepare": "husky install"

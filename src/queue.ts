@@ -1,19 +1,23 @@
-export class Queue {
-  items = new Set<any>()
+import { Base } from './util/base'
+
+export class Queue extends Base {
+  items: any[] = []
+
+  constructor () {
+    super()
+  }
 
   get size (): number {
-    return this.items.size
+    return this.items.length
   }
 
   push<T>(item: T): Queue {
-    this.items.add(item)
+    this.items.push(item)
     return this
   }
 
   next<T>(): T | undefined {
-    const arr = [...this.items]
-    const item = arr.shift()
-    this.items = new Set(arr)
+    const item = this.items.shift()
     return item
   }
 }

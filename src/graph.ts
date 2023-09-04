@@ -1,11 +1,12 @@
 import { GraphNode, type GraphNodeId } from './node'
+import { Base } from './util/base'
 
 /**
  * Graphs are data structures with nodes (vertexes) and edges. This
  * forms a structure that allows traversal by referencing node edges
  * which connect a node to other nodes in the graph
  */
-export class Graph {
+export class Graph extends Base {
   name: string
 
   nodes = new Map<string, GraphNode<any>>()
@@ -14,6 +15,7 @@ export class Graph {
   directed: boolean = false
 
   constructor (name: string, directed: boolean = false) {
+    super()
     if (!name) throw new Error('Graph must have a name')
     this.name = name
     this.directed = directed

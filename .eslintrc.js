@@ -6,6 +6,7 @@ module.exports = {
       rules: {
         '@typescript-eslint/strict-boolean-expressions': 'off',
         '@typescript-eslint/prefer-nullish-coalescing': 'off',
+        '@typescript-eslint/no-useless-constructor': 'off',
       },
     },
   ],

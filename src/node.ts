@@ -1,15 +1,17 @@
 import { v4 as uuid } from 'uuid'
+import { Base } from './util/base'
 export type GraphNodeId = string
 
 /**
  * Define the node (vertex) of the graph
  */
-export class GraphNode<T> {
+export class GraphNode<T> extends Base {
   _id: string = uuid()
   data: T
   adjacents: Array<GraphNode<T>> = []
 
   constructor (data: T, id?: string) {
+    super()
     if (!data) throw new Error('Node must have data')
     this._id = id || uuid()
     this.data = data
