@@ -119,7 +119,9 @@ export class Graph<T extends GraphNode<T>> extends Base {
     return visited;
   }
 
-  find<T>(matcher: any): GraphNode<T> | undefined {
+  find<T>(
+    matcher: (value: GraphNode<T>, index?: number) => GraphNode<T> | unknown
+  ): GraphNode<T> | undefined {
     return [...this.nodes.values()].find(matcher);
   }
 }
