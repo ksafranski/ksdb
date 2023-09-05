@@ -6,7 +6,7 @@ describe('edge', () => {
       const edge = new Edge('test');
       expect(edge).toBeInstanceOf(Edge);
       expect(edge.name).toBe('test');
-      expect(edge.id.length).toBe(36);
+      expect(edge._id.length).toBe(36);
     });
   });
 });

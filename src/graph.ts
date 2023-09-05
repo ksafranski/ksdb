@@ -1,4 +1,4 @@
-import { type Edge } from './edge';
+import { Edge } from './edge';
 import { GraphNode, type GraphNodeId } from './node';
 import { Queue } from './queue';
 import { Stack } from './stack';
@@ -33,6 +33,12 @@ export class Graph<T extends GraphNode<T>> extends Base {
     return this.nodes.get(id);
   }
 
+  addEdge (name: string): Edge {
+    const edge = new Edge(name);
+    this.edges.set(edge._id, edge);
+    return edge;
+  }
+
   // Creates a new node and adds it to the graph
   addNode<T>(data: T): GraphNode<T> {
     const existing = this.nodeExists((data as any)._id);
@@ -57,16 +63,18 @@ export class Graph<T extends GraphNode<T>> extends Base {
   connectNodes<S, D>(
     source: GraphNode<S> | S,
     destination: GraphNode<D> | D,
-    edge: string
+    edge: Edge
   ): Array<GraphNode<any>> {
+    const edgeExists = this.edges.get((edge as any)._id);
+    const edgeToAdd = edgeExists || this.addEdge(edge.name);
     const sourceNode =
       this.nodeExists((source as any)._id) || this.addNode(source);
     const destinationNode =
       this.nodeExists((destination as any)._id) || this.addNode(destination);
     if (sourceNode && destinationNode) {
-      sourceNode.addAdjacent(destinationNode, edge);
+      sourceNode.addAdjacent(destinationNode, edgeToAdd);
       if (!this.directed) {
-        destinationNode.addAdjacent(sourceNode, edge);
+        destinationNode.addAdjacent(sourceNode, edgeToAdd);
       }
     }
     return [sourceNode, destinationNode];

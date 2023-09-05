@@ -1,9 +1,10 @@
 import { v4 as uuid } from 'uuid';
 import { Base } from './util/base';
+import { type Edge } from './edge';
 export type GraphNodeId = string;
 
 interface IGraphNodeAdjacent<T> {
-  edge: string
+  edge: Edge
   node: GraphNode<T>
 }
 
@@ -32,7 +33,7 @@ export class GraphNode<T> extends Base {
   }
 
   // Just pushes an adjacent onto the array
-  addAdjacent (node: GraphNode<T>, edge: string): GraphNode<T> {
+  addAdjacent (node: GraphNode<T>, edge: Edge): GraphNode<T> {
     if (this.isAdjacent(node)) return node;
     if (node instanceof GraphNode) {
       this.adjacents.push({ edge, node });

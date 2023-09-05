@@ -4,10 +4,12 @@ import { v4 as uuid } from 'uuid';
  * Define an edge (connection) of the graph
  */
 export class Edge {
-  id: string = uuid();
+  _id: string;
   name: string;
+  weight: number = 1;
 
-  constructor (name: string) {
+  constructor (name: string, id?: string) {
+    this._id = id || uuid();
     this.name = name;
   }
 }
