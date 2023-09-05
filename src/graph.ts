@@ -52,16 +52,17 @@ export class Graph<T extends GraphNode<T>> extends Base {
   // Adds an edge by connecting the adjacents between a source node an a destination
   addEdge<S, D>(
     source: GraphNode<S> | S,
-    destination: GraphNode<D> | D
+    destination: GraphNode<D> | D,
+    edge: string
   ): Array<GraphNode<any>> {
     const sourceNode =
       this.nodeExists((source as any)._id) || this.addNode(source);
     const destinationNode =
       this.nodeExists((destination as any)._id) || this.addNode(destination);
     if (sourceNode && destinationNode) {
-      sourceNode.addAdjacent(destinationNode);
+      sourceNode.addAdjacent(destinationNode, edge);
       if (!this.directed) {
-        destinationNode.addAdjacent(sourceNode);
+        destinationNode.addAdjacent(sourceNode, edge);
       }
     }
     return [sourceNode, destinationNode];
@@ -105,7 +106,7 @@ export class Graph<T extends GraphNode<T>> extends Base {
         visited.add(node);
         // Add all of the node's adjacent to the visitList.
         for (const adjacent of node.adjacents) {
-          visitList.push(adjacent);
+          visitList.push(adjacent.node);
         }
       }
     }

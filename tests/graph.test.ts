@@ -53,7 +53,7 @@ describe('graph', () => {
       graph = new Graph('test');
       const node1 = graph.addNode('test');
       const node2 = graph.addNode('test2');
-      graph.addEdge(node1, node2);
+      graph.addEdge(node1, node2, 'edge');
       expect(node1?.isAdjacent(node2)).toBe(true);
       expect(node2?.isAdjacent(node1)).toBe(true);
     });
@@ -61,7 +61,7 @@ describe('graph', () => {
       graph = new Graph('test');
       const node1 = graph.addNode('test');
       const node2 = graph.addNode('test2');
-      graph.addEdge(node1, node2);
+      graph.addEdge(node1, node2, 'edge');
       expect(node1?.isAdjacent(node2)).toBe(true);
       expect(node2?.isAdjacent(node1)).toBe(true);
     });
@@ -71,7 +71,7 @@ describe('graph', () => {
       graph = new Graph('test');
       const node1 = graph.addNode('test');
       const node2 = graph.addNode('test2');
-      graph.addEdge(node1, node2);
+      graph.addEdge(node1, node2, 'edge');
       graph.removeEdge(node1, node2);
       expect(node1?.isAdjacent(node2)).toBe(false);
       expect(node2?.isAdjacent(node1)).toBe(false);
@@ -85,9 +85,9 @@ describe('graph', () => {
         const node2 = graph.addNode('test2');
         const node2a = graph.addNode('test2a');
         const node3 = graph.addNode('test3');
-        graph.addEdge(node1, node2);
-        graph.addEdge(node2, node2a);
-        graph.addEdge(node2, node3);
+        graph.addEdge(node1, node2, 'edge');
+        graph.addEdge(node2, node2a, 'edge');
+        graph.addEdge(node2, node3, 'edge');
         const nodes = graph.search('breadth', node1);
         expect(nodes).toBeInstanceOf(Set);
         expect([...nodes].map((n: any) => n.data)).toEqual([
@@ -104,9 +104,9 @@ describe('graph', () => {
         const node2 = graph.addNode('test2');
         const node2a = graph.addNode('test2a');
         const node3 = graph.addNode('test3');
-        graph.addEdge(node1, node2);
-        graph.addEdge(node2, node2a);
-        graph.addEdge(node2, node3);
+        graph.addEdge(node1, node2, 'edge');
+        graph.addEdge(node2, node2a, 'edge');
+        graph.addEdge(node2, node3, 'edge');
         const nodes = graph.search('depth', node1);
         expect(nodes).toBeInstanceOf(Set);
         expect([...nodes].map((n: any) => n.data)).toEqual([
@@ -126,9 +126,9 @@ describe('graph', () => {
       const node2 = graph.addNode('test2');
       const node2a = graph.addNode('test2a');
       const node3 = graph.addNode('test3');
-      graph.addEdge(node1, node2);
-      graph.addEdge(node2, node2a);
-      graph.addEdge(node2, node3);
+      graph.addEdge(node1, node2, 'edge');
+      graph.addEdge(node2, node2a, 'edge');
+      graph.addEdge(node2, node3, 'edge');
       const node = graph.find((n: any) => n.data === 'test2');
       expect(node).toBeInstanceOf(GraphNode);
       expect(node?.data).toBe('test2');
