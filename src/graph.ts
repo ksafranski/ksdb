@@ -1,3 +1,4 @@
+import { type Edge } from './edge';
 import { GraphNode, type GraphNodeId } from './node';
 import { Queue } from './queue';
 import { Stack } from './stack';
@@ -12,6 +13,9 @@ export class Graph<T extends GraphNode<T>> extends Base {
 
   // Member nodes of the graph
   nodes = new Map<string, GraphNode<any>>();
+
+  // Member edges of the graph
+  edges = new Map<string, Edge>();
 
   // Defines if edges move in one direction (true) or any (false)
   directed: boolean = false;
@@ -50,7 +54,7 @@ export class Graph<T extends GraphNode<T>> extends Base {
   }
 
   // Adds an edge by connecting the adjacents between a source node an a destination
-  addEdge<S, D>(
+  connectNodes<S, D>(
     source: GraphNode<S> | S,
     destination: GraphNode<D> | D,
     edge: string
@@ -69,7 +73,7 @@ export class Graph<T extends GraphNode<T>> extends Base {
   }
 
   // Removes an edge by removing the adjacents between a source node and a destination
-  removeEdge<S, D>(
+  disconnectNodes<S, D>(
     source: GraphNode<S>,
     destination: GraphNode<D>
   ): Array<GraphNode<any>> | undefined {
@@ -85,7 +89,7 @@ export class Graph<T extends GraphNode<T>> extends Base {
     }
   }
 
-  search<T>(
+  scan<T>(
     type: 'breadth' | 'depth' = 'breadth',
     first: GraphNode<T>
   ): Set<GraphNode<T> | unknown> {

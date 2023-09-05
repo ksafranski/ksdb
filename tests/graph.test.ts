@@ -48,12 +48,12 @@ describe('graph', () => {
       expect(graph.nodeExists(node?._id)).toBeUndefined();
     });
   });
-  describe('addEdge', () => {
+  describe('connectNodes', () => {
     it('should add an edge between two nodes', () => {
       graph = new Graph('test');
       const node1 = graph.addNode('test');
       const node2 = graph.addNode('test2');
-      graph.addEdge(node1, node2, 'edge');
+      graph.connectNodes(node1, node2, 'edge');
       expect(node1?.isAdjacent(node2)).toBe(true);
       expect(node2?.isAdjacent(node1)).toBe(true);
     });
@@ -61,34 +61,34 @@ describe('graph', () => {
       graph = new Graph('test');
       const node1 = graph.addNode('test');
       const node2 = graph.addNode('test2');
-      graph.addEdge(node1, node2, 'edge');
+      graph.connectNodes(node1, node2, 'edge');
       expect(node1?.isAdjacent(node2)).toBe(true);
       expect(node2?.isAdjacent(node1)).toBe(true);
     });
   });
-  describe('removeEdge', () => {
+  describe('disconnectNodes', () => {
     it('should remove an edge between two nodes', () => {
       graph = new Graph('test');
       const node1 = graph.addNode('test');
       const node2 = graph.addNode('test2');
-      graph.addEdge(node1, node2, 'edge');
-      graph.removeEdge(node1, node2);
+      graph.connectNodes(node1, node2, 'edge');
+      graph.disconnectNodes(node1, node2);
       expect(node1?.isAdjacent(node2)).toBe(false);
       expect(node2?.isAdjacent(node1)).toBe(false);
     });
   });
-  describe('search', () => {
+  describe('scan', () => {
     describe('breadth', () => {
-      it('should return an array of nodes from a breadth-first search', () => {
+      it('should return an array of nodes from a breadth-first scan', () => {
         graph = new Graph('test');
         const node1 = graph.addNode('test');
         const node2 = graph.addNode('test2');
         const node2a = graph.addNode('test2a');
         const node3 = graph.addNode('test3');
-        graph.addEdge(node1, node2, 'edge');
-        graph.addEdge(node2, node2a, 'edge');
-        graph.addEdge(node2, node3, 'edge');
-        const nodes = graph.search('breadth', node1);
+        graph.connectNodes(node1, node2, 'edge');
+        graph.connectNodes(node2, node2a, 'edge');
+        graph.connectNodes(node2, node3, 'edge');
+        const nodes = graph.scan('breadth', node1);
         expect(nodes).toBeInstanceOf(Set);
         expect([...nodes].map((n: any) => n.data)).toEqual([
           'test',
@@ -98,16 +98,16 @@ describe('graph', () => {
         ]);
         expect(nodes?.size).toBe(4);
       });
-      it('should return an array of nodes from a depth-first search', () => {
+      it('should return an array of nodes from a depth-first scan', () => {
         graph = new Graph('test');
         const node1 = graph.addNode('test');
         const node2 = graph.addNode('test2');
         const node2a = graph.addNode('test2a');
         const node3 = graph.addNode('test3');
-        graph.addEdge(node1, node2, 'edge');
-        graph.addEdge(node2, node2a, 'edge');
-        graph.addEdge(node2, node3, 'edge');
-        const nodes = graph.search('depth', node1);
+        graph.connectNodes(node1, node2, 'edge');
+        graph.connectNodes(node2, node2a, 'edge');
+        graph.connectNodes(node2, node3, 'edge');
+        const nodes = graph.scan('depth', node1);
         expect(nodes).toBeInstanceOf(Set);
         expect([...nodes].map((n: any) => n.data)).toEqual([
           'test',
@@ -126,9 +126,9 @@ describe('graph', () => {
       const node2 = graph.addNode('test2');
       const node2a = graph.addNode('test2a');
       const node3 = graph.addNode('test3');
-      graph.addEdge(node1, node2, 'edge');
-      graph.addEdge(node2, node2a, 'edge');
-      graph.addEdge(node2, node3, 'edge');
+      graph.connectNodes(node1, node2, 'edge');
+      graph.connectNodes(node2, node2a, 'edge');
+      graph.connectNodes(node2, node3, 'edge');
       const node = graph.find((n: any) => n.data === 'test2');
       expect(node).toBeInstanceOf(GraphNode);
       expect(node?.data).toBe('test2');
