@@ -33,17 +33,17 @@ export class Graph<T extends GraphNode<T>> extends Base {
     return this.nodes.get(id);
   }
 
-  addEdge (name: string): Edge {
-    const edge = new Edge(name);
+  addEdge (name: string, id?: string): Edge {
+    const edge = new Edge(name, id);
     this.edges.set(edge._id, edge);
     return edge;
   }
 
   // Creates a new node and adds it to the graph
-  addNode<T>(data: T): GraphNode<T> {
+  addNode<T>(data: T, id?: string): GraphNode<T> {
     const existing = this.nodeExists((data as any)._id);
     if (existing) return existing;
-    const node = new GraphNode<T>(data);
+    const node = new GraphNode<T>(data, id);
     this.nodes.set(node._id, node);
     return node;
   }
